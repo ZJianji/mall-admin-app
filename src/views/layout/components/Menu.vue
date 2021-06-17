@@ -1,37 +1,11 @@
 <template>
-  <div calss="home-cantainer">
-    <div class="right-container"
-         :class="{ buttonLeft: collapsed }"
-    >
-      <div class="header-container">
-        <!-- 菜单栏按钮 -->
-        <a-button
-          type="primary"
-          style="margin-bottom: 16px"
-          @click="toggleCollapsed"
-        >
-          <a-icon :type="collapsed ? 'menu-unfold' : 'menu-fold'" />
-        </a-button>
-        <!-- 面包屑 -->
-        <a-breadcrumb>
-          <a-breadcrumb-item>商品</a-breadcrumb-item>
-          <a-breadcrumb-item
-            ><a href="">商品列表</a></a-breadcrumb-item
-          >
-        </a-breadcrumb>
-        <ul class="user">
-          <li>小朱，你好！<a-icon type="down" /></li>
-          <li>退出</li>
-        </ul>
-      </div>
-    </div>
     <a-menu
       :default-selected-keys="['1']"
       :default-open-keys="['sub1']"
       mode="inline"
       theme="dark"
-      :inline-collapsed="collapsed"
-      :class="{ fold: collapsed }"
+      :inline-collapsed="$store.state.collapsed"
+      :class="{ fold: $store.state.collapsed }"
     >
       <a-menu-item key="1">
         <a-icon type="pie-chart" />
@@ -66,24 +40,23 @@
         </a-sub-menu>
       </a-sub-menu>
     </a-menu>
-  </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      collapsed: false,
-    };
-  },
-  methods: {
-    toggleCollapsed() {
-      this.collapsed = !this.collapsed;
-    },
-  },
-};
+  
+}
 </script>
 
-<style scoped lang='less'>
-@import "~@/assets/css/home.less";
+<style lang="less" scoped>
+  .ant-menu{
+    position:fixed;
+    top:0;
+    left: 0;
+    height: 100%;
+    width: 180px;
+    &.fold{
+        width: 70px;
+    }
+  }
 </style>
