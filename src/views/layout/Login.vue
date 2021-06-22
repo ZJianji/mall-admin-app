@@ -67,7 +67,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           api.login(this.ruleForm).then((data) => {
-            console.log(data);
+            // console.log(data);
             this.$store.dispatch('setUserName',data);
             this.$router.push({
               name: 'Home'

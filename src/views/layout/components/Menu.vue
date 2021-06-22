@@ -1,50 +1,35 @@
 <template>
+<div class="menu-comtainer" >
     <a-menu
-      :default-selected-keys="['1']"
-      :default-open-keys="['sub1']"
+      :default-selected-keys="[$router.currentRoute.matched[1]?$router.currentRoute.matched[1].name:'']"
+      :default-open-keys="[$router.currentRoute.matched[0].name]"
       mode="inline"
       theme="dark"
       :inline-collapsed="$store.state.collapsed"
       :class="{ fold: $store.state.collapsed }"
     >
-      <a-menu-item key="1">
-        <a-icon type="pie-chart" />
-        <span>Option 1</span>
-      </a-menu-item>
-      <a-menu-item key="2">
-        <a-icon type="desktop" />
-        <span>Option 2</span>
-      </a-menu-item>
-      <a-menu-item key="3">
-        <a-icon type="inbox" />
-        <span>Option 3</span>
-      </a-menu-item>
-      <a-sub-menu key="sub1">
+     <template v-for="list in $store.state.menuRoutes"> 
+      <a-sub-menu   :key="list.name" v-if="list.meta.display">
         <span slot="title"
-          ><a-icon type="mail" /><span>Navigation One</span></span
+          ><a-icon :type="list.meta.icon" /><span>{{ list.meta.title }}</span></span
         >
-        <a-menu-item key="5"> Option 5 </a-menu-item>
-        <a-menu-item key="6"> Option 6 </a-menu-item>
-        <a-menu-item key="7"> Option 7 </a-menu-item>
-        <a-menu-item key="8"> Option 8 </a-menu-item>
+        <a-menu-item :key="children.name" v-for="children in list.children"> 
+          <router-link :to="{
+            name: children.name
+          }"><a-icon :type="children.meta.icon" /><span>{{ children.meta.title }}</span> </router-link> 
+         </a-menu-item>
+        
       </a-sub-menu>
-      <a-sub-menu key="sub2">
-        <span slot="title"
-          ><a-icon type="appstore" /><span>Navigation Two</span></span
-        >
-        <a-menu-item key="9"> Option 9 </a-menu-item>
-        <a-menu-item key="10"> Option 10 </a-menu-item>
-        <a-sub-menu key="sub3" title="Submenu">
-          <a-menu-item key="11"> Option 11 </a-menu-item>
-          <a-menu-item key="12"> Option 12 </a-menu-item>
-        </a-sub-menu>
-      </a-sub-menu>
+      </template>
     </a-menu>
+    </div>
 </template>
 
 <script>
 export default {
-  
+  created() {
+   console.log(this.$route)
+  }
 }
 </script>
 

@@ -16,9 +16,10 @@
       </a-breadcrumb>
       <ul class="user">
         <li>{{ $store.state.user.username }}<a-icon type="down" /></li>
-        <li>退出</li>
+        <li @click="handleExit">退出</li>
       </ul>
     </div>
+   <router-view></router-view>
   </div>
 </template>
 
@@ -33,7 +34,14 @@ export default {
     toggleCollapsed() {
       this.$store.dispatch('changeCollapsed');
     },
+    handleExit() {
+      this.$store.dispatch('logout');
+      this.$router.push({
+        name: 'Login',
+      })
+    }
   },
+  
 };
 </script>
 
