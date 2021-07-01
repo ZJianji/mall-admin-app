@@ -13,11 +13,14 @@
         <span slot="title"
           ><a-icon :type="list.meta.icon" /><span>{{ list.meta.title }}</span></span
         >
-        <a-menu-item :key="children.name" v-for="children in list.children"> 
+        <template v-for="children in list.children">
+            <a-menu-item :key="children.name" v-if="children.meta.display"> 
           <router-link :to="{
             name: children.name
           }"><a-icon :type="children.meta.icon" /><span>{{ children.meta.title }}</span> </router-link> 
          </a-menu-item>
+        </template>
+      
         
       </a-sub-menu>
       </template>
@@ -27,9 +30,7 @@
 
 <script>
 export default {
-  created() {
-   console.log(this.$route)
-  }
+ 
 }
 </script>
 
