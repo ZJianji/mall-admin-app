@@ -1,6 +1,6 @@
 <template>
   <div calss="home-cantainer">
-    <Menu />
+    <Menu :key="key" />
     <div class="aside-container">
       <Header />
     </div>
@@ -15,6 +15,16 @@ export default {
     Header,
     Menu,
   },
+  data() {
+    return {
+      key: new Date().getTime(),
+    }
+  },
+  watch: {
+    $route() {
+      this.key = new Date().getTime();
+    }
+  }
 };
 </script>
 

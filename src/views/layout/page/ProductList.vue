@@ -1,6 +1,9 @@
 <template>
   <div class="productList-container">
       <Search @handleSearch="handleCommodity" :categoryList="categoryList" />
+       <router-link :to="{name: 'ProductAdd'}" class="addProduct">
+        <a-button>新增商品</a-button> 
+        </router-link>
       <Table 
       :data="tableList" 
       :page="page"
@@ -102,6 +105,16 @@ export default {
 }
 </script>
 
-<style>
+<style code lang="less">
+.productList-container{
+  position: relative;
+}
+.addProduct {
+  position: absolute;
+  right:20px;
+  top:14px;
+  
+
+}
 
 </style>
