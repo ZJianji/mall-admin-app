@@ -71,15 +71,40 @@ export default {
       this.current--;
     },
     handleSubmit(val) {
-      console.log(val)
-      
-         api.add(val).then((r) => {
-         console.log(r);
-      })
+       if (this.$route.params.id) {
+          api.edit(val).then((res) => {
+            console.log(res);
+            this.$message.success('修改成功');
+            this.$router.push({
+              name: 'ProductList',
+            });
+          });
+        } else {
+          api.add(val).then((res) => {
+            console.log(res);
+            this.$message.success('新增成功');
+            this.$router.push({
+              name: 'ProductList',
+            });
+          });
+        }
+
+      //    api.add(val).then((r) => {
+      //    console.log(r);
+      // })
      
       
      
     }
+  },
+  created() {
+    
+    if(this.$route.params.id) {
+      api.detail(this.$route.params.id).then((r) => {
+        this.form = r;
+      })
+    }
+
   },
 };
 </script>

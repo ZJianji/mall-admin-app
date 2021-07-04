@@ -25,7 +25,7 @@
           {{ list.name }}
         </a-select-option>
       </a-select>
-      <a-select v-model="form.c_items" placeholder="请选择商品子类别！">
+      <a-select v-model="form.c_item" placeholder="请选择商品子类别！">
         <a-select-option
            v-for="(item, i) in c_itemsList"
           :key="i"
@@ -60,6 +60,7 @@ export default {
       rules: {},
       categoryList: [],
       c_itemsList: [],
+      
     };
   },
   methods: {
@@ -86,10 +87,22 @@ export default {
   },
   created() {
     api.getSearch().then((r) => {
+       let arr = [];
+         arr = r.data.filter((item) => {
+        return item.id === this.form.category;
+      });
       this.categoryList = r.data;
-      // console.log(this.form.c_items);
+       this.form.category = arr[0].name;
     });
   },
+  watch: {
+    'form.category': {
+      deep:true,
+        handler:function(newV){
+          console.log('watch中：',newV)
+        }
+    }
+  }
 };
 </script>
 

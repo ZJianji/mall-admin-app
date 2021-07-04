@@ -103,6 +103,16 @@ export default {
       
     },
   },
+  created() {
+     if (this.form.images.length > 0) {
+      this.fileList = this.form.images.map((item, index) => ({
+        uid: index,
+        name: `image-${index}.png`,
+        status: 'done',
+        url: item,
+      }));
+    }
+  }
 };
 </script>
 

@@ -74,8 +74,10 @@ export default {
     },
     //编辑按钮操作，跳转到编辑页以及传递该行的信息
     handleEdit(record) {
-       this.$router.push({name: "ProductEdit"});
-       console.log(record)
+       this.$router.push({name: "ProductEdit",  params: {
+          id: record.id,
+        },});
+      //  console.log(record)
     },
     handleDelete(record) {
        this.$confirm({

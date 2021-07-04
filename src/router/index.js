@@ -40,14 +40,14 @@ const ayncRouter = [
       component: () => import('@/views/layout/page/ProductAdd.vue'),
     },
     {
-      path: 'edit',
+      path: 'edit/:id',
       name: 'ProductEdit',
       meta: {
         title: '商品编辑',
         display: false,
         icon: 'file-add'
       },
-      component: () => import('@/views/layout/page/ProductEdit.vue'),
+      component: () => import('@/views/layout/page/ProductAdd.vue'),
     },
     {
       path: 'category',
