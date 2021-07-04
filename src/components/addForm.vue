@@ -36,7 +36,7 @@
       </a-select>
     </a-form-model-item>
     <a-form-model-item label="商品标签" required prop="tags">
-      <a-select v-model="form.tags" mode="tags" :token-separators="[',']">
+      <a-select v-model="form.tags" mode="tags" :token-separators="[',']" :default-value="['包邮，最晚次日达']">
         <a-select-option v-for="item in form.tags" :key="item">
           {{ item }}
         </a-select-option>
@@ -50,17 +50,13 @@
 <script>
 import api from "@/api/search";
 export default {
+  props: {
+    form: [],
+  },
   data() {
     return {
       labelCol: { span: 4 },
       wrapperCol: { span: 14 },
-      form: {
-        title: "",
-        desc: "",
-        category: [],
-        c_items: [],
-        tags: ["包邮，次日达！"],
-      },
       rules: {},
       categoryList: [],
       c_itemsList: [],
@@ -70,7 +66,8 @@ export default {
     onSubmit() {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
-          this.$emit("onNext");
+          // console.log(this.form)
+          this.$emit("onNext",this.form);
         } else {
           console.log("error submit!!");
           return false;
@@ -83,17 +80,16 @@ export default {
         return item.name === val;
       });
       this.c_itemsList = arr[0].c_items;
-      console.log(this.c_itemsList);
+     
+      // console.log(this.c_itemsList);
     },
   },
   created() {
     api.getSearch().then((r) => {
       this.categoryList = r.data;
-      // this.form.c_items = r.data.map((r) => {
-      //   return r.c_items;
-      // });
       // console.log(this.form.c_items);
     });
   },
 };
 </script>
+

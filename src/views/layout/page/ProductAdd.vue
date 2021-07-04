@@ -4,31 +4,40 @@
       <a-step v-for="item in steps" :key="item.title" :title="item.title" />
     </a-steps>
     <div class="steps-content">
-      <AddForm v-if="current === 0" @onNext="next"/>
+      <AddForm v-if="current === 0" @onNext="next" :form="form"/>
+       <SaleList v-else @prev="prev" :form="form" @onNext="handleSubmit"/>
+       
     </div>
     <div class="steps-action">
-      <a-button
-        v-if="current == steps.length - 1"
-        type="primary"
-        @click="$message.success('提交成功!')"
-      >
-        提交
-      </a-button>
-      <a-button v-if="current > 0"  @click="prev">
-        上一步
-      </a-button>
     </div>
   </div>
 </template>
 <script>
 import AddForm from "@/components/addForm"
+import SaleList from "@/components/saleList"
+import api from "@/api/product"
+import search from "@/api/search"
 export default {
   components: {
     AddForm,
+    SaleList
   },
   data() {
     return {
       current: 0,
+      form: {
+        title: "",
+        desc: "",
+        category: '',
+        c_items: [],
+        tags: ['包邮，最晚次日达'],
+        price: 0,
+        price_off: 0,
+        inventory: 0,
+        unit: '',
+        images: [],
+        status: 1
+      },
       steps: [
         {
           title: '请填写商品基本信息',
@@ -40,12 +49,37 @@ export default {
     };
   },
   methods: {
-    next() {
+    next(form) {
+       search.getSearch().then((r) => {
+         let arr = [];
+         let c = [];
+         arr = r.data.filter((item) => {
+        return item.name === form.category;
+      });
+      form.category = arr[0].id; 
+      c.push(form.c_items);
+      form.c_items = c;
+      console.log(arr[0])
+     });
+      this.form = form;
+      this.form.title = form.title;
+      this.form.price = form.price;
       this.current++;
+ 
     },
     prev() {
       this.current--;
     },
+    handleSubmit(val) {
+      console.log(val)
+      
+         api.add(val).then((r) => {
+         console.log(r);
+      })
+     
+      
+     
+    }
   },
 };
 </script>
